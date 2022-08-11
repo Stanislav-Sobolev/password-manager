@@ -14,6 +14,13 @@ export function App() {
   const [name] = useState('');
   const [number] = useState('');
 
+  const state = {
+    contacts: {
+      items: [],
+      filter: '',
+    },
+  };
+
   useEffect(() => {
     const contactsLocalStorage = JSON.parse(localStorage.getItem('contacts'));
 
