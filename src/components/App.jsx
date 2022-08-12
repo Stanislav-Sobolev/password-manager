@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 // import { nanoid } from 'nanoid';
 import { HeadTitle } from './PhoneBook.styled';
 import { ContactList } from './ContactList';
@@ -6,9 +6,9 @@ import { Filter } from './Filter';
 import { ContactForm } from './ContactForm';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   initialState,
   addContact,
