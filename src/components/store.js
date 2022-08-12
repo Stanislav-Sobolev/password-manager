@@ -1,7 +1,7 @@
 // import React from 'react';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 // import { createAction, createReducer } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 
 export const initialState = {
   items: [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' }],
@@ -13,22 +13,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     addContact(state, action) {
-      if (
-        state.items.find(el =>
-          el.name.toLowerCase().includes(action.payload.name.toLowerCase())
-        )
-      ) {
-        alert(`${action.payload.name} is already in contacts.`);
-        return state;
-      } else {
-        state.items.push({
-          id: nanoid(),
-          name: action.payload.name,
-          number: action.payload.number,
-        });
-
-        // localStorage.setItem('contacts', JSON.stringify(newStateContacts));
-      }
+      state.items.push(action.payload);
     },
 
     filteredItems(state, action) {

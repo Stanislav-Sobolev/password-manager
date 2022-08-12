@@ -1,5 +1,5 @@
 // import React from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { HeadTitle } from './PhoneBook.styled';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
@@ -8,13 +8,8 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 // import { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-import {
-  initialState,
-  addContact,
-  filteredItems,
-  deleteContact,
-} from './store';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact, filteredItems, deleteContact } from './store';
 
 export function App() {
   // const [contacts, setContacts] = useState([]);
@@ -22,10 +17,8 @@ export function App() {
   const [name] = useState('');
   const [number] = useState('');
 
-  // const items = useSelector(state => state.items);
-  // const filters = useSelector(state => state.filters);
-  const items = initialState.items;
-  const filters = initialState.filters;
+  const items = useSelector(state => state.items);
+  const filters = useSelector(state => state.filters);
 
   const dispatch = useDispatch();
 
@@ -37,7 +30,18 @@ export function App() {
   // }, []);
 
   const handleSubmit = (e, { resetForm }) => {
-    dispatch(addContact(e));
+    if (
+      items.find(el => el.name.toLowerCase().includes(e.name.toLowerCase()))
+    ) {
+      alert(`${e.name} is already in contacts.`);
+    } else {
+      const newContact = {
+        id: nanoid(),
+        name: e.name,
+        number: e.number,
+      };
+      dispatch(addContact(newContact));
+    }
     // setContacts(prevState => {
     //   if (
     //     prevState.find(el =>
@@ -49,13 +53,18 @@ export function App() {
     //   } else {
     //     const newStateContacts = [...prevState];
 
-    //     newStateContacts.push({ id: nanoid(), name: e.name, number: e.number });
+    //     newStateContacts.push({
+    //       id: nanoid(),
+    //       name: e.name,
+    //       number: e.number,
+    //     });
 
     //     localStorage.setItem('contacts', JSON.stringify(newStateContacts));
 
     //     return newStateContacts;
     //   }
-    // });
+    // })
+
     resetForm();
   };
 
@@ -65,7 +74,8 @@ export function App() {
   };
 
   const getVisibleContacts = () => {
-    const filterToLowerCase = filters.toLowerCase();
+    // const filterToLowerCase = filters.toLowerCase();
+    const filterToLowerCase = filters;
 
     return items.filter(el =>
       el.name.toLowerCase().includes(filterToLowerCase)
