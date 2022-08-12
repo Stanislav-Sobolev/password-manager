@@ -1,5 +1,5 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { HeadTitle } from './PhoneBook.styled';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
@@ -8,68 +8,76 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  initialState,
+  addContact,
+  filteredItems,
+  deleteContact,
+} from './store';
+
 export function App() {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
   const [name] = useState('');
   const [number] = useState('');
 
-  const state = {
-    contacts: {
-      items: [],
-      filter: '',
-    },
-  };
+  // const items = useSelector(state => state.items);
+  // const filters = useSelector(state => state.filters);
+  const items = initialState.items;
+  const filters = initialState.filters;
 
-  useEffect(() => {
-    const contactsLocalStorage = JSON.parse(localStorage.getItem('contacts'));
+  const dispatch = useDispatch();
 
-    if (contactsLocalStorage) {
-      setContacts(contactsLocalStorage);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const contactsLocalStorage = JSON.parse(localStorage.getItem('contacts'));
+  //   if (contactsLocalStorage) {
+  //     setContacts(contactsLocalStorage);
+  //   }
+  // }, []);
 
   const handleSubmit = (e, { resetForm }) => {
-    setContacts(prevState => {
-      if (
-        prevState.find(el =>
-          el.name.toLowerCase().includes(e.name.toLowerCase())
-        )
-      ) {
-        alert(`${e.name} is already in contacts.`);
-        return prevState;
-      } else {
-        const newStateContacts = [...prevState];
+    dispatch(addContact(e));
+    // setContacts(prevState => {
+    //   if (
+    //     prevState.find(el =>
+    //       el.name.toLowerCase().includes(e.name.toLowerCase())
+    //     )
+    //   ) {
+    //     alert(`${e.name} is already in contacts.`);
+    //     return prevState;
+    //   } else {
+    //     const newStateContacts = [...prevState];
 
-        newStateContacts.push({ id: nanoid(), name: e.name, number: e.number });
+    //     newStateContacts.push({ id: nanoid(), name: e.name, number: e.number });
 
-        localStorage.setItem('contacts', JSON.stringify(newStateContacts));
+    //     localStorage.setItem('contacts', JSON.stringify(newStateContacts));
 
-        resetForm();
-
-        return newStateContacts;
-      }
-    });
+    //     return newStateContacts;
+    //   }
+    // });
+    resetForm();
   };
 
   const handleFilter = e => {
-    setFilter(e);
+    dispatch(filteredItems(e));
+    // setFilter(e);
   };
 
   const getVisibleContacts = () => {
-    const filterToLowerCase = filter.toLowerCase();
+    const filterToLowerCase = filters.toLowerCase();
 
-    return contacts.filter(el =>
+    return items.filter(el =>
       el.name.toLowerCase().includes(filterToLowerCase)
     );
   };
 
-  const deleteContact = e => {
-    const newContacts = contacts.filter(el => el.id !== e);
-    setContacts([...newContacts]);
+  // const deleteContact = e => {
+  //   const newContacts = contacts.filter(el => el.id !== e);
+  //   setContacts([...newContacts]);
 
-    localStorage.setItem('contacts', JSON.stringify(newContacts));
-  };
+  //   localStorage.setItem('contacts', JSON.stringify(newContacts));
+  // };
 
   const visibleContacts = getVisibleContacts();
 
@@ -78,21 +86,21 @@ export function App() {
       <HeadTitle>Phonebook</HeadTitle>
 
       <ContactForm
-        initialValues={{ contacts, filter, name, number }}
+        initialValues={{ items, filters, name, number }}
         onSubmit={handleSubmit}
       />
 
       <HeadTitle>Contacts</HeadTitle>
 
       <Filter
-        contacts={contacts}
-        filterState={filter}
+        contacts={items}
+        filterState={filters}
         handleFilter={handleFilter}
       />
 
       <ContactList
         filteredArr={visibleContacts}
-        deleteContact={deleteContact}
+        deleteContact={id => dispatch(deleteContact(id))}
       />
     </>
   );
