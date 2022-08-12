@@ -1,5 +1,5 @@
 import { ButtonStyled, ContactItem } from './PhoneBook.styled';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export const ContactList = ({ filteredArr, deleteContact }) => {
   const dispatch = useDispatch();
