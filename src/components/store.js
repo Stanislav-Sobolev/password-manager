@@ -1,11 +1,15 @@
-// import React from 'react';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-// import { createAction, createReducer } from '@reduxjs/toolkit';
-// import { nanoid } from 'nanoid';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 export const initialState = {
   items: [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' }],
   filters: '',
+};
+
+const persistConfig = {
+  key: 'root',
+  storage,
 };
 
 const slice = createSlice({
@@ -27,10 +31,14 @@ const slice = createSlice({
   },
 });
 
+const persistedReducer = persistReducer(persistConfig, slice.reducer);
+
 export const store = configureStore({
   reducer: {
-    myContacts: slice.reducer,
+    myContacts: persistedReducer,
   },
 });
+
+export const persistor = persistStore(store);
 
 export const { addContact, filteredItems, deleteContact } = slice.actions;

@@ -17,8 +17,8 @@ export function App() {
   const [name] = useState('');
   const [number] = useState('');
 
-  const items = useSelector(state => state.items);
-  const filters = useSelector(state => state.filters);
+  const items = useSelector(state => state.myContacts.items);
+  const filters = useSelector(state => state.myContacts.filters);
 
   const dispatch = useDispatch();
 
