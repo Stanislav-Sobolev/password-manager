@@ -5,46 +5,52 @@ import { Filter } from './Filter';
 import { ContactForm } from './ContactForm';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact, filteredItems, deleteContact } from './store';
+import { useGetContactsQuery, useAddContactMutation } from './store';
 
 export function App() {
   const [name] = useState('');
   const [number] = useState('');
+  const [filter, setFilter] = useState('');
 
-  const items = useSelector(state => state.myContacts.items);
-  const filters = useSelector(state => state.myContacts.filters);
+  const { data: items } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
-  const dispatch = useDispatch();
-
-  const handleSubmit = (e, { resetForm }) => {
-    if (
-      items.find(el => el.name.toLowerCase().includes(e.name.toLowerCase()))
-    ) {
-      alert(`${e.name} is already in contacts.`);
-    } else {
-      const newContact = {
-        id: nanoid(),
-        name: e.name,
-        number: e.number,
-      };
-      dispatch(addContact(newContact));
+  const handleSubmit = async (e, { resetForm }) => {
+    try {
+      if (
+        items.find(el => el.name.toLowerCase().includes(e.name.toLowerCase()))
+      ) {
+        alert(`${e.name} is already in contacts.`);
+      } else {
+        const newContact = {
+          id: nanoid(),
+          name: e.name,
+          number: e.number,
+        };
+        await addContact(newContact);
+      }
+    } catch (error) {
+      alert(error.message);
     }
 
     resetForm();
   };
 
   const handleFilter = e => {
-    dispatch(filteredItems(e));
+    setFilter(e);
   };
 
   const getVisibleContacts = () => {
-    const filterToLowerCase = filters;
+    let result;
+    if (items) {
+      result = items.filter(el =>
+        el.name.toLowerCase().includes(filter.toLowerCase())
+      );
+    } else {
+      result = items;
+    }
 
-    return items.filter(el =>
-      el.name.toLowerCase().includes(filterToLowerCase)
-    );
+    return result;
   };
 
   const visibleContacts = getVisibleContacts();
@@ -54,22 +60,15 @@ export function App() {
       <HeadTitle>Phonebook</HeadTitle>
 
       <ContactForm
-        initialValues={{ items, filters, name, number }}
+        initialValues={{ items, name, number }}
         onSubmit={handleSubmit}
       />
 
       <HeadTitle>Contacts</HeadTitle>
 
-      <Filter
-        contacts={items}
-        filterState={filters}
-        handleFilter={handleFilter}
-      />
+      <Filter filterState={filter} handleFilter={handleFilter} />
 
-      <ContactList
-        filteredArr={visibleContacts}
-        deleteContact={id => dispatch(deleteContact(id))}
-      />
+      {items && <ContactList filteredArr={visibleContacts} />}
     </>
   );
 }
@@ -87,5 +86,4 @@ Filter.propTypes = {
 
 ContactList.propTypes = {
   filteredArr: PropTypes.array,
-  deleteContact: PropTypes.func,
 };
