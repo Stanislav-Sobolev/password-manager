@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { persistStore } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
