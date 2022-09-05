@@ -1,6 +1,6 @@
-import { ButtonStyled, ContactItem } from './PhoneBook.styled';
+import { ButtonStyled, ContactItem } from '../Contacts/PhoneBook.styled';
 
-import { useGetContactsQuery, useDeleteContactMutation } from './store';
+import { useGetContactsQuery, useDeleteContactMutation } from '../store';
 
 export const ContactList = ({ filteredArr }) => {
   const { data } = useGetContactsQuery();

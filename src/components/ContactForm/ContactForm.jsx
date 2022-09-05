@@ -6,7 +6,7 @@ import {
   LabelStyled,
   FieldStyled,
   Error,
-} from './PhoneBook.styled';
+} from '../Contacts/PhoneBook.styled';
 
 let schema = yup.object().shape({
   name: yup

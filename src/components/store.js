@@ -1,13 +1,34 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { createSlice } from '@reduxjs/toolkit';
+import authOperations from '../Redux/authOperations';
+import axios from 'axios';
 
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+const axiosBaseQuery =
+  ({ baseUrl } = { baseUrl: '' }) =>
+  async ({ url, method, data, params }) => {
+    try {
+      const result = await axios({ url: baseUrl + url, method, data, params });
+      return { data: result.data };
+    } catch (axiosError) {
+      let err = axiosError;
+      return {
+        error: {
+          status: err.response?.status,
+          data: err.response?.data || err.message,
+        },
+      };
+    }
+  };
 
 export const materialsApi = createApi({
   reducerPath: 'contacts',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://6301fb43e71700618a41078e.mockapi.io',
+  baseQuery: axiosBaseQuery({
+    // baseUrl: 'https://6301fb43e71700618a41078e.mockapi.io',
+    baseUrl: 'https://connections-api.herokuapp.com',
   }),
   tagTypes: ['Contact'],
+
   endpoints: builder => ({
     getContacts: builder.query({
       query: () => `/contacts`,
@@ -31,9 +52,37 @@ export const materialsApi = createApi({
   }),
 });
 
+////////////////////////////////////////////////
+///////////////////authSlice////////////////////
+////////////////////////////////////////////////
+
+export const initialState = {
+  user: { name: null, email: null },
+  token: null,
+  isLoggedIn: false,
+  isRefreshingUser: false,
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  extraReducers: {
+    [authOperations.register.fulfilled](state, action) {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+  },
+});
+
+////////////////////////////////////////////
+///////////////////STORE////////////////////
+////////////////////////////////////////////
+
 export const store = configureStore({
   reducer: {
     [materialsApi.reducerPath]: materialsApi.reducer,
+    contacts: authSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(materialsApi.middleware),
@@ -44,82 +93,3 @@ export const {
   useAddContactMutation,
   useDeleteContactMutation,
 } = materialsApi;
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-
-// export const initialState = {
-//   items: [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' }],
-//   filters: '',
-// };
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// };
-
-// const slice = createSlice({
-//   name: 'contacts',
-//   initialState,
-//   reducers: {
-//     addContact(state, action) {
-//       state.items.push(action.payload);
-//     },
-
-//     filteredItems(state, action) {
-//       state.filters = action.payload;
-//     },
-
-//     deleteContact(state, action) {
-//       const newContacts = state.items.filter(el => el.id !== action.payload);
-//       return { ...state, items: newContacts };
-//     },
-//   },
-// });
-
-// const persistedReducer = persistReducer(persistConfig, slice.reducer);
-
-// export const persistor = persistStore(store);
-
-// export const { addContact, filteredItems, deleteContact } = slice.actions;
-
-// export const initialState = {
-//   items: [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' }],
-//   filters: '',
-// };
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// };
-
-// const slice = createSlice({
-//   name: 'contacts',
-//   initialState,
-//   reducers: {
-//     addContact(state, action) {
-//       state.items.push(action.payload);
-//     },
-
-//     filteredItems(state, action) {
-//       state.filters = action.payload;
-//     },
-
-//     deleteContact(state, action) {
-//       const newContacts = state.items.filter(el => el.id !== action.payload);
-//       return { ...state, items: newContacts };
-//     },
-//   },
-// });
-
-// const persistedReducer = persistReducer(persistConfig, slice.reducer);
-
-// export const store = configureStore({
-//   reducer: {
-//     myContacts: persistedReducer,
-//   },
-// });
-
-// export const persistor = persistStore(store);
-
-// export const { addContact, filteredItems, deleteContact } = slice.actions;
