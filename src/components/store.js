@@ -1,8 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  getDefaultMiddleware,
+  createSlice,
+} from '@reduxjs/toolkit';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { createSlice } from '@reduxjs/toolkit';
 import authOperations from '../Redux/authOperations';
 import axios from 'axios';
+import storage from 'redux-persist/lib/storage';
+
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
@@ -24,21 +39,20 @@ const axiosBaseQuery =
 export const materialsApi = createApi({
   reducerPath: 'contacts',
   baseQuery: axiosBaseQuery({
-    // baseUrl: 'https://6301fb43e71700618a41078e.mockapi.io',
     baseUrl: 'https://connections-api.herokuapp.com',
   }),
   tagTypes: ['Contact'],
 
   endpoints: builder => ({
     getContacts: builder.query({
-      query: () => `/contacts`,
+      query: () => ({ url: `/contacts` }),
       providesTags: ['Contact'],
     }),
     addContact: builder.mutation({
       query: values => ({
         url: `/contacts`,
         method: 'POST',
-        body: values,
+        data: values,
       }),
       invalidatesTags: ['Contact'],
     }),
@@ -76,17 +90,39 @@ const authSlice = createSlice({
 });
 
 ////////////////////////////////////////////
+////////////////PERSISTOR///////////////////
+////////////////////////////////////////////
+
+const persistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
+
+const middleware = [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+];
+
+////////////////////////////////////////////
 ///////////////////STORE////////////////////
 ////////////////////////////////////////////
 
 export const store = configureStore({
   reducer: {
     [materialsApi.reducerPath]: materialsApi.reducer,
-    contacts: authSlice.reducer,
+    auth: persistReducer(persistConfig, authSlice.reducer),
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(materialsApi.middleware),
+  middleware,
+  devTools: process.env.NODE_ENV === 'development',
+  // middleware: getDefaultMiddleware =>
+  //   getDefaultMiddleware().concat(materialsApi.middleware),
 });
+
+export const persistor = persistStore(store);
 
 export const {
   useGetContactsQuery,

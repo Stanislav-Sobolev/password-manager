@@ -13,6 +13,7 @@ export function App() {
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
           <Route path="contacts" element={<Contacts />} />
+          <Route path="*" element={<Contacts />} />
         </Route>
       </Routes>
     </>

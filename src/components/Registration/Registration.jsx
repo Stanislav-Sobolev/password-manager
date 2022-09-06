@@ -7,7 +7,7 @@ import {
   FormRegistration,
 } from '../Contacts/PhoneBook.styled';
 import { useDispatch } from 'react-redux';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 import operations from '../../Redux/authOperations';
 
 export const Registration = () => {
@@ -26,9 +26,9 @@ export const Registration = () => {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>Registration</title>
-      </Helmet>
+      </Helmet> */}
 
       <FormContainer>
         <FormTitle>Registration</FormTitle>

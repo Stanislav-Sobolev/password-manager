@@ -3,10 +3,10 @@ import { Filter } from '../Filter/Filter';
 import { ContactList } from '../ContactList/ContactList';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { useGetContactsQuery, useAddContactMutation } from '../store';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 
 export const Contacts = () => {
   const [name] = useState('');
@@ -16,18 +16,23 @@ export const Contacts = () => {
   const { data: items } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
 
+  console.log('items', items);
+
   const handleSubmit = async (e, { resetForm }) => {
     try {
       if (
-        items.find(el => el.name.toLowerCase().includes(e.name.toLowerCase()))
+        await items.find(el =>
+          el.name.toLowerCase().includes(e.name.toLowerCase())
+        )
       ) {
         alert(`${e.name} is already in contacts.`);
       } else {
         const newContact = {
-          id: nanoid(),
+          // id: nanoid(),
           name: e.name,
           number: e.number,
         };
+
         await addContact(newContact);
       }
     } catch (error) {
@@ -58,9 +63,9 @@ export const Contacts = () => {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>Contacts</title>
-      </Helmet>
+      </Helmet> */}
       <HeadTitle>Phonebook</HeadTitle>
 
       <ContactForm
