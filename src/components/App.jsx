@@ -3,8 +3,17 @@ import { Contacts } from './Contacts/Contacts';
 import { Registration } from './Registration/Registration';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { Login } from './Login/Login';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import authOperations from '../Redux/authOperations';
 
 export function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+    console.log('useEffect mount');
+  }, [dispatch]);
   return (
     <>
       <Routes>

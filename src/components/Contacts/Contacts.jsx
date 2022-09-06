@@ -5,16 +5,23 @@ import { ContactForm } from '../ContactForm/ContactForm';
 import { useGetContactsQuery, useAddContactMutation } from '../store';
 // import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { Helmet } from 'react-helmet';
+import { useDispatch } from 'react-redux';
+import authOperations from '../../Redux/authOperations';
 
 export const Contacts = () => {
   const [name] = useState('');
   const [number] = useState('');
   const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
 
   const { data: items } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
 
   console.log('items', items);
 
