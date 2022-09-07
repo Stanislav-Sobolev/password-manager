@@ -3,18 +3,21 @@ import { Filter } from '../Filter/Filter';
 import { ContactList } from '../ContactList/ContactList';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { useGetContactsQuery, useAddContactMutation } from '../store';
-// import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { Helmet } from 'react-helmet';
-// import { useDispatch } from 'react-redux';
-// import authOperations from '../../Redux/authOperations';
+import { useDispatch } from 'react-redux';
+import authOperations from '../../Redux/authOperations';
 
-export const Contacts = () => {
+const Contacts = () => {
   const [name] = useState('');
   const [number] = useState('');
   const [filter, setFilter] = useState('');
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
 
   const { data: items } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
@@ -29,7 +32,6 @@ export const Contacts = () => {
         alert(`${e.name} is already in contacts.`);
       } else {
         const newContact = {
-          // id: nanoid(),
           name: e.name,
           number: e.number,
         };
@@ -96,3 +98,5 @@ Filter.propTypes = {
 ContactList.propTypes = {
   filteredArr: PropTypes.array,
 };
+
+export default Contacts;

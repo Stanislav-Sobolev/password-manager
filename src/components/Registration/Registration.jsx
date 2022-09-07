@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 // import { Helmet } from 'react-helmet';
 import operations from '../../Redux/authOperations';
 
-export const Registration = () => {
+const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,3 +65,5 @@ export const Registration = () => {
     </>
   );
 };
+
+export default Registration;

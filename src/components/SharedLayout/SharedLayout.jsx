@@ -16,7 +16,7 @@ import {
   Link,
 } from '../Contacts/PhoneBook.styled';
 
-export const SharedLayout = () => {
+const SharedLayout = () => {
   const { isLoggedIn, user } = useAuth();
   const dispatch = useDispatch();
   return (
@@ -67,3 +67,5 @@ export const SharedLayout = () => {
     </>
   );
 };
+
+export default SharedLayout;

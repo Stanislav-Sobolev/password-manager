@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 // import { Helmet } from 'react-helmet';
 import operations from '../../Redux/authOperations';
 
-export const Login = () => {
+const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async values => {
@@ -53,3 +53,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;
