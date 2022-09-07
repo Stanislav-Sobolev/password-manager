@@ -21,7 +21,6 @@ export const Registration = () => {
     setEmail(values.email);
     setPassword(values.password);
     dispatch(operations.register(values));
-    console.log('values :>> ', values);
   };
 
   return (
