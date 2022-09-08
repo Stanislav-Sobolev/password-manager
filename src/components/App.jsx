@@ -25,7 +25,13 @@ export function App() {
       ) : (
         <Routes>
           <Route path="/" element={<SharedLayout />}>
-            <Route index element={<Contacts />} />
+            {/* <Route index element={<Contacts />} /> */}
+            <Route
+              index
+              element={
+                <PrivateRoute redirectTo="/contacts" component={<Contacts />} />
+              }
+            />
             <Route
               path="/registration"
               element={

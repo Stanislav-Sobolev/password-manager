@@ -4,20 +4,12 @@ import { ContactList } from '../ContactList/ContactList';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { useGetContactsQuery, useAddContactMutation } from '../store';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-// import { Helmet } from 'react-helmet';
-import { useDispatch } from 'react-redux';
-import authOperations from '../../Redux/authOperations';
+import { useState } from 'react';
 
 const Contacts = () => {
   const [name] = useState('');
   const [number] = useState('');
   const [filter, setFilter] = useState('');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(authOperations.fetchCurrentUser());
-  }, [dispatch]);
 
   const { data: items } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();

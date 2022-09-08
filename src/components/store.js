@@ -126,6 +126,7 @@ const middleware = [
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
+  materialsApi.middleware,
 ];
 
 ////////////////////////////////////////////
