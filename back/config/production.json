@@ -1,0 +1,6 @@
+{
+  "port": 5000,
+  "jwtSecret": "stanislav key",
+  "mongoUri": "mongodb+srv://stanislav:987msta0102bm@cluster0.b2gocru.mongodb.net/?retryWrites=true&w=majority",
+  "baseUrl": "http://localhost:5000"
+}
