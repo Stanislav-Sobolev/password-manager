@@ -17,7 +17,6 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^2.1.3",
@@ -35,16 +34,10 @@
     "lint:js": "eslint src/**/*.{js,jsx}"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
