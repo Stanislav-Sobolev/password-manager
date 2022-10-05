@@ -1,15 +1,15 @@
-export const Filter = ({filterState, handleFilter}) => {
+import React from 'react';
 
-    return (
-        <>
-        <p>Find contacts by name</p>
-        <input 
-            type="text" 
-            name="filter" 
-            value={filterState} 
-            onChange={(e) => handleFilter(e.target.value)}/>
-       
-        </>
-    )
-}
-
+export const Filter = ({ filterState, handleFilter }) => {
+  return (
+    <>
+      <p>Find contacts by name</p>
+      <input
+        type="text"
+        name="filter"
+        value={filterState}
+        onChange={e => handleFilter(e.target.value)}
+      />
+    </>
+  );
+};

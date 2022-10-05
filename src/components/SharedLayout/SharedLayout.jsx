@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import React from 'react';
 import { Suspense } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';

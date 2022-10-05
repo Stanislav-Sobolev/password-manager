@@ -1,3 +1,4 @@
+import React from 'react';
 import { HeadTitle } from './PhoneBook.styled';
 import { Filter } from '../Filter/Filter';
 import { ContactList } from '../ContactList/ContactList';
