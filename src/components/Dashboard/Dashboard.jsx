@@ -7,7 +7,7 @@ import { useGetPasswordsQuery, useAddPasswordMutation } from '../store';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-const Passwords = () => {
+const Dashboard = () => {
   const [filter, setFilter] = useState('');
 
   const { data: items } = useGetPasswordsQuery();
@@ -84,4 +84,4 @@ PasswordList.propTypes = {
   filteredArr: PropTypes.array,
 };
 
-export default Passwords;
+export default Dashboard;

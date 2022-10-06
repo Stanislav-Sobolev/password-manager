@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledList } from '../Passwords/PasswordManager.styled';
+import { StyledList } from '../Dashboard/PasswordManager.styled';
 
 import { useGetPasswordsQuery, useDeletePasswordMutation } from '../store';
 import { PasswordItem } from './PasswordItem';

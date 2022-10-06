@@ -13,7 +13,7 @@ import {
   FieldStyled,
   Error,
   PassFieldWrapper,
-} from '../Passwords/PasswordManager.styled';
+} from '../Dashboard/PasswordManager.styled';
 
 let schema = yup.object().shape({
   name: yup

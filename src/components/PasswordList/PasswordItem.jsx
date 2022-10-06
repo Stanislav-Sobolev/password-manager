@@ -5,7 +5,7 @@ import {
   StyledHidePass,
   StyledShowPass,
   PasswordIconsWrapper,
-} from '../Passwords/PasswordManager.styled';
+} from '../Dashboard/PasswordManager.styled';
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 

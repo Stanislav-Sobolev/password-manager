@@ -17,7 +17,7 @@ import {
   NavigationWrap,
   NavItem,
   Link,
-} from '../Passwords/PasswordManager.styled';
+} from '../Dashboard/PasswordManager.styled';
 
 const SharedLayout = () => {
   const { isLoggedIn, user } = useAuth();
@@ -30,7 +30,7 @@ const SharedLayout = () => {
             {isLoggedIn ? (
               <>
                 <NavItem>
-                  <Link to="/passwords">Passwords</Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </NavItem>
               </>
             ) : (

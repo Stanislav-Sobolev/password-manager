@@ -63,7 +63,7 @@ export const FormRegistration = styled(Form)`
   padding: 10px;
 `;
 
-////////////Passwords//////////////
+////////////Dashboard//////////////
 
 export const PasswordPageWrapper = styled.div`
   display: flex;

@@ -9,7 +9,7 @@ import PublicRoute from './PublicRoute';
 
 const Registration = lazy(() => import('./Registration/Registration'));
 const Login = lazy(() => import('./Login/Login'));
-const Passwords = lazy(() => import('./Passwords/Passwords'));
+const Dashboard = lazy(() => import('./Dashboard/Dashboard'));
 
 export function App() {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ export function App() {
               index
               element={
                 <PrivateRoute
-                  redirectTo="/passwords"
-                  component={<Passwords />}
+                  redirectTo="/dashboard"
+                  component={<Dashboard />}
                 />
               }
             />
@@ -40,7 +40,7 @@ export function App() {
               element={
                 <PublicRoute
                   restricted
-                  redirectTo="/passwords"
+                  redirectTo="/dashboard"
                   component={<Registration />}
                 />
               }
@@ -50,15 +50,15 @@ export function App() {
               element={
                 <PublicRoute
                   restricted
-                  redirectTo="/passwords"
+                  redirectTo="/dashboard"
                   component={<Login />}
                 />
               }
             />
             <Route
-              path="/passwords"
+              path="/dashboard"
               element={
-                <PrivateRoute redirectTo="/login" component={<Passwords />} />
+                <PrivateRoute redirectTo="/login" component={<Dashboard />} />
               }
             />
           </Route>

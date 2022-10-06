@@ -5,7 +5,7 @@ import {
   FormContainer,
   FormTitle,
   FormRegistration,
-} from '../Passwords/PasswordManager.styled';
+} from '../Dashboard/PasswordManager.styled';
 import { useDispatch } from 'react-redux';
 
 import operations from '../../Redux/authOperations';
