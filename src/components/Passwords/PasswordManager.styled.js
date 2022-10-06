@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Field, Form } from 'formik';
 import { NavLink } from 'react-router-dom';
+import InputLabel from '@material-ui/core/InputLabel';
 
 ////////////Header//////////////
 
@@ -62,7 +63,21 @@ export const FormRegistration = styled(Form)`
   padding: 10px;
 `;
 
-////////////Contacts//////////////
+////////////Passwords//////////////
+
+export const PasswordPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const StyledHidePass = styled.p`
+  -webkit-text-security: disc;
+`;
+
+export const StyledShowPass = styled.p`
+  -webkit-text-security: none;
+`;
 
 export const HeadTitle = styled.p`
   font-size: 25px;
@@ -73,20 +88,31 @@ export const HeadTitle = styled.p`
 export const FormStyled = styled(Form)`
   background-color: azure;
   border: 1px solid lightgray;
-  width: 300px;
+  width: 250px;
   padding: 10px;
 `;
 
-export const LabelStyled = styled.label`
-  display: block;
-  margin-bottom: 15px;
+export const LabelStyled = styled(InputLabel)`
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 5px;
   font-weight: 500;
-  width: 50px;
+`;
+
+export const PassFieldWrapper = styled.div`
+  display: inline-flex;
+  align-items: flex-start;
+  width: 250px;
+  max-width: 100%;
 `;
 
 export const FieldStyled = styled(Field)`
   border: 1px solid lightgray;
-  width: 250px;
+  margin-bottom: 10px;
+  width: 200px;
+  max-width: 100%;
+  height: 15px;
 `;
 
 export const ButtonStyled = styled.button`
@@ -96,11 +122,22 @@ export const ButtonStyled = styled.button`
   padding: 3px 6px;
 `;
 
-export const ContactItem = styled.span`
+export const PasswordItemWrapper = styled.span`
   display: inline-flex;
   margin-top: 10px;
   margin-right: 10px;
   font-weight: 500;
+`;
+
+export const PasswordIconsWrapper = styled.span`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  min-width: 250px;
+`;
+
+export const StyledList = styled.ul`
+  margin-top: 10px;
 `;
 
 export const Error = styled.div`

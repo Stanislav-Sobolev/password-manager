@@ -3,10 +3,12 @@ import React from 'react';
 import { Suspense } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+
 import { useAuth } from '../../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import operations from '../../Redux/authOperations';
+import LogoutIcon from '@mui/icons-material/Logout';
+import IconButton from '@material-ui/core/IconButton';
 
 import {
   UserInfo,
@@ -15,7 +17,7 @@ import {
   NavigationWrap,
   NavItem,
   Link,
-} from '../Contacts/PhoneBook.styled';
+} from '../Passwords/PasswordManager.styled';
 
 const SharedLayout = () => {
   const { isLoggedIn, user } = useAuth();
@@ -28,7 +30,7 @@ const SharedLayout = () => {
             {isLoggedIn ? (
               <>
                 <NavItem>
-                  <Link to="/contacts">Contacts</Link>
+                  <Link to="/passwords">Passwords</Link>
                 </NavItem>
               </>
             ) : (
@@ -50,13 +52,12 @@ const SharedLayout = () => {
             </Stack>
 
             {isLoggedIn && (
-              <Button
-                variant="outlined"
-                size="small"
+              <IconButton
                 onClick={() => dispatch(operations.logOut())}
+                size="small"
               >
-                LogOut
-              </Button>
+                <LogoutIcon />
+              </IconButton>
             )}
           </UserInfo>
         </NavigationWrap>

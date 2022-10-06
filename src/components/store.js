@@ -37,31 +37,31 @@ const axiosBaseQuery =
   };
 
 export const materialsApi = createApi({
-  reducerPath: 'contacts',
+  reducerPath: 'passwords',
   baseQuery: axiosBaseQuery({
     baseUrl: 'https://connections-api.herokuapp.com',
   }),
-  tagTypes: ['Contact'],
+  tagTypes: ['Password'],
 
   endpoints: builder => ({
-    getContacts: builder.query({
+    getPasswords: builder.query({
       query: () => ({ url: `/contacts` }),
-      providesTags: ['Contact'],
+      providesTags: ['Password'],
     }),
-    addContact: builder.mutation({
+    addPassword: builder.mutation({
       query: values => ({
         url: `/contacts`,
         method: 'POST',
         data: values,
       }),
-      invalidatesTags: ['Contact'],
+      invalidatesTags: ['Password'],
     }),
-    deleteContact: builder.mutation({
+    deletePassword: builder.mutation({
       query: id => ({
         url: `/contacts/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Contact'],
+      invalidatesTags: ['Password'],
     }),
   }),
 });
@@ -145,7 +145,7 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 
 export const {
-  useGetContactsQuery,
-  useAddContactMutation,
-  useDeleteContactMutation,
+  useGetPasswordsQuery,
+  useAddPasswordMutation,
+  useDeletePasswordMutation,
 } = materialsApi;

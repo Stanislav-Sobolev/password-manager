@@ -5,7 +5,7 @@ import {
   FormContainer,
   FormTitle,
   FormRegistration,
-} from '../Contacts/PhoneBook.styled';
+} from '../Passwords/PasswordManager.styled';
 import { useDispatch } from 'react-redux';
 
 import operations from '../../Redux/authOperations';
@@ -43,7 +43,7 @@ const Login = () => {
               <Field id="password" name="password" placeholder="qwerty" />
             </LabelStyled>
 
-            <button type="submit">Submit</button>
+            <button type="submit">Sign in</button>
           </FormRegistration>
         </Formik>
       </FormContainer>

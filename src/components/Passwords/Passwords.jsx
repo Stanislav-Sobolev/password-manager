@@ -1,19 +1,17 @@
 import React from 'react';
-import { HeadTitle } from './PhoneBook.styled';
+import { HeadTitle, PasswordPageWrapper } from './PasswordManager.styled';
 import { Filter } from '../Filter/Filter';
-import { ContactList } from '../ContactList/ContactList';
-import { ContactForm } from '../ContactForm/ContactForm';
-import { useGetContactsQuery, useAddContactMutation } from '../store';
+import { PasswordList } from '../PasswordList/PasswordList';
+import { PasswordForm } from '../PasswordForm/PasswordForm';
+import { useGetPasswordsQuery, useAddPasswordMutation } from '../store';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-const Contacts = () => {
-  const [name] = useState('');
-  const [number] = useState('');
+const Passwords = () => {
   const [filter, setFilter] = useState('');
 
-  const { data: items } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const { data: items } = useGetPasswordsQuery();
+  const [addPassword] = useAddPasswordMutation();
 
   const handleSubmit = async (e, { resetForm }) => {
     try {
@@ -22,14 +20,14 @@ const Contacts = () => {
           el.name.toLowerCase().includes(e.name.toLowerCase())
         )
       ) {
-        alert(`${e.name} is already in contacts.`);
+        alert(`${e.name} is already in passwords.`);
       } else {
-        const newContact = {
+        const newPassword = {
           name: e.name,
-          number: e.number,
+          number: e.pass,
         };
 
-        await addContact(newContact);
+        await addPassword(newPassword);
       }
     } catch (error) {
       alert(error.message);
@@ -42,7 +40,7 @@ const Contacts = () => {
     setFilter(e);
   };
 
-  const getVisibleContacts = () => {
+  const getVisiblePasswords = () => {
     let result;
     if (items) {
       result = items.filter(el =>
@@ -55,39 +53,35 @@ const Contacts = () => {
     return result;
   };
 
-  const visibleContacts = getVisibleContacts();
+  const visiblePasswords = getVisiblePasswords();
 
   return (
-    <>
+    <PasswordPageWrapper>
+      <HeadTitle>Add Password</HeadTitle>
 
-      <HeadTitle>Phonebook</HeadTitle>
-
-      <ContactForm
-        initialValues={{ items, name, number }}
-        onSubmit={handleSubmit}
-      />
-      <HeadTitle>Contacts</HeadTitle>
+      <PasswordForm onSubmit={handleSubmit} />
+      <HeadTitle>Passwords</HeadTitle>
 
       <Filter filterState={filter} handleFilter={handleFilter} />
 
-      {items && <ContactList filteredArr={visibleContacts} />}
-    </>
+      {items && <PasswordList filteredArr={visiblePasswords} />}
+    </PasswordPageWrapper>
   );
 };
 
-ContactForm.propTypes = {
+PasswordForm.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };
 
 Filter.propTypes = {
-  contacts: PropTypes.array,
+  passwords: PropTypes.array,
   filterState: PropTypes.string,
   handleFilter: PropTypes.func,
 };
 
-ContactList.propTypes = {
+PasswordList.propTypes = {
   filteredArr: PropTypes.array,
 };
 
-export default Contacts;
+export default Passwords;
