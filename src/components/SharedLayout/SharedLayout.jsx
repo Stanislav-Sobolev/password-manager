@@ -48,7 +48,7 @@ const SharedLayout = () => {
           <UserInfo>
             <UserName>{user.name}</UserName>
             <Stack direction="row" spacing={1}>
-              <Avatar src="/broken-image.jpg" />
+              <Avatar />
             </Stack>
 
             {isLoggedIn && (
