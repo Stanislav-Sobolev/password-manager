@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "/password-manager/static/js/0.0562adef.chunk.js"
   },
   {
-    "revision": "01b36f249f4706c91ebd",
+    "revision": "1ed850fc3d9fab7b2337",
     "url": "/password-manager/static/css/main.5c29444a.chunk.css"
   },
   {
-    "revision": "01b36f249f4706c91ebd",
-    "url": "/password-manager/static/js/main.a3349dee.chunk.js"
+    "revision": "1ed850fc3d9fab7b2337",
+    "url": "/password-manager/static/js/main.e114827b.chunk.js"
   },
   {
     "revision": "d1ffc4313632f2ffdf65",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/password-manager/static/js/7.e9f570fd.chunk.js"
   },
   {
-    "revision": "f876870a579b5f55c9563127e4e594ed",
+    "revision": "33b812fdaf1efb6b4ffa7c33d9b604e1",
     "url": "/password-manager/index.html"
   }
 ];
