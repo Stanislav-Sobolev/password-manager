@@ -29,8 +29,8 @@ export const deletePassword = createAsyncThunk(
   'passwords/deletePassword',
   async (passwordId, thunkAPI) => {
     try {
-      const response = await axios.delete(`/contacts/${passwordId}`);
-      return response.data;
+      await axios.delete(`/contacts/${passwordId}`);
+      return passwordId;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
