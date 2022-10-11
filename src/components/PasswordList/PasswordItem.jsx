@@ -1,22 +1,21 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deletePassword } from '../../Redux/contactsOperations';
 import { useState } from 'react';
 import {
   PasswordItemWrapper,
   StyledHidePass,
-  StyledShowPass,
   PasswordIconsWrapper,
 } from '../Dashboard/PasswordManager.styled';
-
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-
 import IconButton from '@material-ui/core/IconButton';
-
 import Visibility from '@material-ui/icons/Visibility';
-
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-export const PasswordItem = ({ item, onDelete }) => {
+export const PasswordItem = ({ item }) => {
   const [hidePass, setHidePass] = useState(true);
+
+  const dispatch = useDispatch();
 
   const hidePassHandler = () => {
     setHidePass(!hidePass);
@@ -26,11 +25,7 @@ export const PasswordItem = ({ item, onDelete }) => {
     <PasswordIconsWrapper>
       <PasswordItemWrapper>
         {item.name}:&nbsp;
-        {hidePass ? (
-          <StyledHidePass>{item.number}</StyledHidePass>
-        ) : (
-          <StyledShowPass>{item.number}</StyledShowPass>
-        )}
+        <StyledHidePass toHidePass={hidePass}>{item.number}</StyledHidePass>
       </PasswordItemWrapper>
       <div>
         <IconButton onClick={hidePassHandler} size="small">
@@ -40,7 +35,10 @@ export const PasswordItem = ({ item, onDelete }) => {
             <Visibility style={{ fontSize: '18px' }} />
           )}
         </IconButton>
-        <IconButton onClick={() => onDelete(item.id)} size="small">
+        <IconButton
+          onClick={() => dispatch(deletePassword(item.id))}
+          size="small"
+        >
           <DeleteOutlinedIcon fontSize="small" />
         </IconButton>
       </div>

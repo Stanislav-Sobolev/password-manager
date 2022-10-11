@@ -10,13 +10,22 @@ import {
   Error,
 } from '../Dashboard/PasswordManager.styled';
 import { useDispatch } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 
 import operations from '../../Redux/authOperations';
 
 let schema = yup.object().shape({
-  name: yup.string().min(2, 'must be at least 2 characters long').required(),
+  name: yup
+    .string()
+    .min(2, 'must be at least 2 characters long')
+    .matches(/^\D+$/, 'The field should not have digits')
+    .required(),
+
   email: yup.string().email().required(),
-  password: yup.mixed().required(),
+  password: yup
+    .string()
+    .min(7, 'must be at least 7 characters long')
+    .required(),
 });
 
 const Registration = () => {
@@ -34,6 +43,7 @@ const Registration = () => {
 
   return (
     <>
+      <Toaster />
       <FormContainer>
         <FormTitle>Registration</FormTitle>
         <Formik

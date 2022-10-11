@@ -72,11 +72,9 @@ export const PasswordPageWrapper = styled.div`
 `;
 
 export const StyledHidePass = styled.p`
-  -webkit-text-security: disc;
-`;
-
-export const StyledShowPass = styled.p`
-  -webkit-text-security: none;
+  -webkit-text-security: ${function (props) {
+    return props.toHidePass ? 'disc' : 'none';
+  }};
 `;
 
 export const HeadTitle = styled.p`

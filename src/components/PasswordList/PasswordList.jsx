@@ -1,19 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectAllPasswords } from '../../Redux/contactsSelectors';
 import { StyledList } from '../Dashboard/PasswordManager.styled';
-
-import { useGetPasswordsQuery, useDeletePasswordMutation } from '../store';
 import { PasswordItem } from './PasswordItem';
 
 export const PasswordList = ({ filteredArr }) => {
-  const { data } = useGetPasswordsQuery();
-  const [deletePassword] = useDeletePasswordMutation();
+  const data = useSelector(selectAllPasswords);
 
   return (
     <StyledList>
       {data && (
         <>
           {filteredArr.map(item => (
-            <PasswordItem key={item.id} item={item} onDelete={deletePassword} />
+            <PasswordItem key={item.id} item={item} />
           ))}
         </>
       )}

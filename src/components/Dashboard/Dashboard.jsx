@@ -3,34 +3,39 @@ import { HeadTitle, PasswordPageWrapper } from './PasswordManager.styled';
 import { Filter } from '../Filter/Filter';
 import { PasswordList } from '../PasswordList/PasswordList';
 import { PasswordForm } from '../PasswordForm/PasswordForm';
-import { useGetPasswordsQuery, useAddPasswordMutation } from '../store';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllPasswords } from '../../Redux/contactsSelectors';
+import { addPassword, fetchPasswords } from '../../Redux/contactsOperations';
+import toast, { Toaster } from 'react-hot-toast';
+
+import { useEffect } from 'react';
 
 const Dashboard = () => {
   const [filter, setFilter] = useState('');
 
-  const { data: items } = useGetPasswordsQuery();
-  const [addPassword] = useAddPasswordMutation();
+  const dispatch = useDispatch();
+  const items = useSelector(selectAllPasswords);
+
+  useEffect(() => {
+    dispatch(fetchPasswords());
+  }, [dispatch]);
 
   const handleSubmit = async (e, { resetForm }) => {
     try {
-      if (
-        await items.find(el =>
-          el.name.toLowerCase().includes(e.name.toLowerCase())
-        )
-      ) {
-        alert(`${e.name} is already in passwords.`);
+      if (items.find(el => el.name.toLowerCase() === e.name.toLowerCase())) {
+        toast.error(`${e.name} is already in passwords.`);
       } else {
         const newPassword = {
           name: e.name,
           number: e.pass,
         };
 
-        await addPassword(newPassword);
+        await dispatch(addPassword(newPassword));
       }
     } catch (error) {
-      alert(error.message);
+      toast.error(`${error.message}`);
     }
 
     resetForm();
@@ -57,6 +62,7 @@ const Dashboard = () => {
 
   return (
     <PasswordPageWrapper>
+      <Toaster />
       <HeadTitle>Add Password</HeadTitle>
 
       <PasswordForm onSubmit={handleSubmit} />
